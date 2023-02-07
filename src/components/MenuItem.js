@@ -1,7 +1,29 @@
-const MenuItem = ({ data }) => {
+const MenuItem = ({ data, setCart, cart }) => {
   return (
     <div className="MenuItem">
-      <div className="MenuItem--card">
+      <div
+        className="MenuItem--card"
+        onClick={() => {
+          const result = cart.findIndex((item) => item.title === data.title);
+          const result2 = cart.find((item) => item.title === data.title);
+
+          if (result2) {
+            const copyCart = [...cart];
+            copyCart[result].price += Number(data.price);
+            copyCart[result].quantity += 1;
+            setCart(copyCart);
+          } else {
+            const copyCart = [...cart];
+            copyCart.push({
+              title: data.title,
+              price: Number(data.price),
+              initPrice: data.price,
+              quantity: 1,
+            });
+            setCart(copyCart);
+          }
+        }}
+      >
         <div className="MenuItem--texts">
           <h3>{data.title}</h3>
           <p>{data.description}</p>
